@@ -2,21 +2,21 @@
 ##### QC2 pipeline that contains criteria that was used for Gnomad 2.1.1 Karczewski et al. 2019:
 
 cd ~
-cp .bashrc_COPY2019AUG07_ANACONDA_PYTHON3p7_SPARK2p4p0___COPY .bashrc
+cp .bashrc_ANACONDA_PYTHON3p7_SPARK2p4p0___COPY .bashrc
 login
 conda activate hail
 
-contents of .bashrc_COPY2019AUG07_ANACONDA_PYTHON3p7_SPARK2p4p0___COPY include:
-#export HAIL_HOME=/nvme/emmrat/software_various/hail_2017nov_from_zip/hail  # or wherever you cloned Hail
-export HAIL_HOME=/nvme/emmrat/software_various/hail_2017nov_from_git/hail  # or wherever you cloned Hail
+contents of .bashrc_ANACONDA_PYTHON3p7_SPARK2p4p0___COPY include:
+#export HAIL_HOME=/my/dir/hail_2017nov_from_zip/hail  # or wherever you cloned Hail
+export HAIL_HOME=/my/dir/hail_2017nov_from_git/hail  # or wherever you cloned Hail
 export PATH=$PATH:$HAIL_HOME/bin/
-#export SPARK_HOME=/nvme/emma_hail_2017may/spark-2.0.2-bin-hadoop2.7  # or wherever you unzipped Spark
-#export SPARK_HOME=/nvme/emmrat/software_various/spark/spark-2.4.0-bin-hadoop2.7 # Hail will not work with spark-2.4, need spark-2.0
-#####export SPARK_HOME=/nvme/emmrat/software_various/spark/spark-2.0.2-bin-hadoop2.7
+#export SPARK_HOME=/my/dir/hail_2017may/spark-2.0.2-bin-hadoop2.7  # or wherever you unzipped Spark
+#export SPARK_HOME=/my/dir/spark/spark-2.4.0-bin-hadoop2.7 # Hail will not work with spark-2.4, need spark-2.0
+#####export SPARK_HOME=/my/dir/spark/spark-2.0.2-bin-hadoop2.7
 #####export PYTHONPATH="$PYTHONPATH:$HAIL_HOME/python:$SPARK_HOME/python:`echo $SPARK_HOME/python/lib/py4j-0.10.3-src.zip`"
 #export PYTHONPATH="$PYTHONPATH:$HAIL_HOME/python:$SPARK_HOME/python:$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-*-src.zip"
 #####export SPARK_CLASSPATH=$HAIL_HOME/build/libs/hail-all-spark.jar
-export TMPDIR=/nvme/emmrat/tmp_for_hail
+export TMPDIR=/my/dir/tmp_for_hail
 #####export SPARK_LOCAL_DIRS=${TMPDIR}/spark
 #export PYSPARK_SUBMIT_ARGS="--driver-memory 500g pyspark-shell"
 #export PYSPARK_SUBMIT_ARGS="--driver-memory 50g pyspark-shell --storageLevel MEMORY_AND_DISK"
@@ -29,7 +29,7 @@ export TMPDIR=/nvme/emmrat/tmp_for_hail
 # When asking for 1 core per executor, spark may launch 56 executors. 
 # Those executors have only 1 cpu each, and have to execute the whole JVM (java virtual machine) (the executor is a program that JVM runs).
 # Maybe they don't have enough cpu time to reply to heartbeats from the Spark Master, which causes spark (and hail) to crash.
-#####export PATH=/nvme/emma_hail_2017may/spark-2.0.2-bin-hadoop2.7/bin:$PATH
+#####export PATH=/my/dir/hail_2017may/spark-2.0.2-bin-hadoop2.7/bin:$PATH
 
 
 
@@ -42,7 +42,7 @@ python code/calculate_gnomad_variant_filter_fields_in_hail_for_our_cohort.py \
 	-infiles /my/cohort/my_cohort_vcf_files.txt \
 	-outfile /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.tsv.bgz \
 	-locii data/qc_loci.InfiniumQCArray-24v1-0_A3.bed \
-	-locii_mt_file /nvme/emmrat/new_qc/mgrb/MGRB.phase2qc.hc.norm.InfiniumQCArray_24v1_0_A3.mt \
+	-locii_mt_file /my/cohort/MGRB.phase2qc.hc.norm.InfiniumQCArray_24v1_0_A3.mt \
 	-vcf_or_mt vcf
 
 mv /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.tsv.bgz /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.tsv.gz
@@ -53,7 +53,7 @@ Rscript code/filter_variants_for_sample_qc.R /my/cohort/output/my_cohort.Infiniu
 python code/calculate_gnomad_sample_filter_fields_in_hail_for_our_cohort.py \
 	-outfile /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.filtered_variants.sample_qc_stats.tsv.bgz \
 	-locii /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.filtered_variants.bed \
-	-locii_mt_file /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.mt \
+	-locii_mt_file /my/cohort/my_cohort.InfiniumQCArray_24v1_0_A3.mt \
 	-vcf_or_mt mt
 
 mv /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.filtered_variants.sample_qc_stats.tsv.bgz /my/cohort/output/my_cohort.InfiniumQCArray_24v1_0_A3.filtered_variants.sample_qc_stats.tsv.gz
