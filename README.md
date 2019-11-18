@@ -16,29 +16,31 @@ There are 2 different sample QC pipelines:
 * MGRB [(Medical Genome Reference Bank)](https://sgc.garvan.org.au/initiatives) data is a whole-genome data resource of 4000 healthy elderly individuals ([manuscript 1](https://www.biorxiv.org/content/10.1101/473348v1), [manuscript 2](https://www.nature.com/articles/s41431-018-0279-z)). QC1 criteria are detailed in [Pinese et al. 2018](https://www.biorxiv.org/content/10.1101/473348v1).  
 * ISKS [(International Sarcoma Kindred Study)](http://sarcomahelp.org/articles/sarcoma-kindred-study.html) data is a whole-genome data resource (manuscript in preparation).  
 
-#### QC1 citation
+### QC1 citation
 The Medical Genome Reference Bank: Whole genomes and phenotype of 2,570 healthy elderly.  
 Mark Pinese, Paul Lacaze, Emma M. Rath, et al.  
 [https://www.biorxiv.org/content/10.1101/473348v1](https://www.biorxiv.org/content/10.1101/473348v1)
 
-#### QC2 citations
+### QC2 citations
 Variation across 141,456 human exomes and genomes reveals the spectrum of loss-of-function intolerance across human protein-coding genes.  
 Konrad J Karczewski, Laurent C Francioli, Grace Tiao, et al.  
 [https://www.biorxiv.org/content/10.1101/473348v1](https://www.biorxiv.org/content/10.1101/473348v10)  
 
 Comparison of [ISKS (International Sarcoma Kindred Study)](http://sarcomahelp.org/articles/sarcoma-kindred-study.html) and [MGRB (Medical Genome Reference Bank)](https://sgc.garvan.org.au/initiatives) (manuscript in preparation).
 
-#### Pipeline flow
+### Pipeline flow
 * For QC1, please follow the commands in code/commands_for_QC1.txt
 * For QC2, please follow the commands in code/commands_for_QC2.txt
 
-#### QC criteria
+### QC criteria
 
 Please note that the pipelines for QC1 and QC2 produce the necessary sample-level variant statistics for QC to be performed, but do not perform QC.  
 
-QC1 sample variant criteria:  
+#### QC1 sample variant criteria:  
+
 For each cohort, choose from high-confident non-rare SNPs (eg. Illumina array SNPs were used for MGRB and ISKS studies) those SNPs that are:  
 * not autosomal (not X or Y)  
+
 These locii are used for sample QC1. Sample passes QC1 when:  
 * call rate > 0.98  
 * depth stdev < 10  
@@ -46,11 +48,13 @@ These locii are used for sample QC1. Sample passes QC1 when:
 * rHetHomVar < 2  
 * (num_singletons / (num_SNPs + num_insertions + num_deletions)) < 0.001  
 
-QC2 sample variant criteria:  
+#### QC2 sample variant criteria:  
+
 For each cohort, choose from high-confident non-rare SNPs (eg. Illumina array SNPs were used for MGRB and ISKS studies) those SNPs that are:  
 * biallelic (have at least one sample having a non-reference allele)  
 * call_rate > 0.99  
 * avg VAF > 0.001  
+
 These locii are used for sample QC2. Sample passes QC2 when:  
 * call_rate >= 0.895  
 * f_stat > 0.8 or f_stat < 0.2 f_stat is the inbreeding coefficient calculated using chrom X. According to Karczewski et al. 2019, f_stat > 0.8 is classified as male, f_stat < 0.2 is classified as female. Samples with intermediate f_stat are classified as ambiguous sex.
